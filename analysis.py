@@ -28,6 +28,7 @@ def plot_problem_1():
                 y = 'PCT_ADULTMENTALHEALTHNOTGOOD',
                 kind = 'scatter', data = data) 
     plt.savefig('racevsmentalhealth.png') 
+    #plots not saving need to figure that out :) 
 
 
 
