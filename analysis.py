@@ -2,7 +2,6 @@
 File to perform data analysis
 '''
 
-import pandas as pd
 from clean_data import filter_data
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -36,10 +35,6 @@ def plot_question_three(clean_data):
 
 
 def main():
-    # creating master dataframe with everything in it
-    # Sahana's path: df = pd.read_csv('/Users/sahana/Desktop/github/
-    #                                 'cse163-final-project/data/Racial_and_Social_Equity_Composite_Index.csv')
-    # Stella's path:
     clean_data = filter_data()
     plot_problem_1(clean_data)
     plot_question_three(clean_data)
