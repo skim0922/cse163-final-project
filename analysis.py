@@ -2,6 +2,7 @@
 File to perform data analysis
 '''
 
+import pandas as pd
 from clean_data import filter_data
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -31,10 +32,14 @@ def plot_question_three(clean_data):
     plt.xlabel('Composite Quintile')
     plt.ylabel('Acres Total')
     plt.title('Total Neighborhood Acres by Composite Index Quintile')
-    plt.savefig('size_vs_quintile.png', bbox_inches='tight')
+    plt.savefig('size_vs_quintile.png')
 
 
 def main():
+    # creating master dataframe with everything in it
+    # Sahana's path: df = pd.read_csv('/Users/sahana/Desktop/github/
+    #                                 'cse163-final-project/data/Racial_and_Social_Equity_Composite_Index.csv')
+    # Stella's path:
     clean_data = filter_data()
     plot_problem_1(clean_data)
     plot_question_three(clean_data)
