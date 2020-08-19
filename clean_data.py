@@ -15,8 +15,10 @@ def filter_data():
     df = df.dropna()
     data = df[['PCT_ADULTMENTALHEALTHNOTGOOD', 'RACE_ELL_ORIGINS_PERCENTILE',
                'SOCIOECONOMIC_PERCENTILE', 'PCT_ENGLISH_LESSTHAN_VERY_WELL',
+               'PCT_PEOPLE_OF_COLOR', 'SOCIOECONOMIC_QUINTILE',
                'PCT_LESS_BACHELOR_DEGREE', 'ACRES_TOTAL', 'COMPOSITE_QUINTILE',
               'NAME10']]
+    data = data.replace({'Highest priority/Most disadvantaged': 'Highest'})
     return data
 
 

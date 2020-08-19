@@ -31,25 +31,65 @@ def plot_problem_two(clean_data):
     plt.savefig('socioecon_vs_mentalhealth.png', bbox_inches='tight')
 
 
-def plot_question_three(clean_data):
+def plot_problem_three(clean_data):
     # total acres vs. index quintile
-    # grouped = data.groupby('COMPOSITE_QUINTILE')['ACRES_TOTAL'].mean()
-    sns.catplot(x='ACRES_TOTAL',
-                y='COMPOSITE_QUINTILE',
+    sns.catplot(x='COMPOSITE_QUINTILE',
+                y='ACRES_TOTAL',
                 data=clean_data,
-                kind='bar')
-
-    plt.xlabel('Acres Total')
-    plt.ylabel('Composite Index Quintile')
+                kind='bar',
+                order=['Lowest', 'Second lowest', 'Middle',
+                       'Second highest', 'Highest'])
+    plt.xlabel('Composite Index Quintile (Level of Priority)')
+    plt.ylabel('Total Acres')
+    plt.xticks(rotation=-45)
     plt.title('Total Neighborhood Acres by Composite Index Quintile')
     plt.savefig('size_vs_quintile.png', bbox_inches='tight')
+
+
+def plot_problem_four(clean_data):
+    # socioeconomic percentile vs. educational attainment
+    sns.lmplot(x='SOCIOECONOMIC_PERCENTILE',
+               y='PCT_LESS_BACHELOR_DEGREE',
+               scatter=True,
+               fit_reg=True,
+               data=clean_data)
+    plt.xlabel('Socioeconomic Disadvantage Percentile')
+    plt.ylabel('Percent of People with Less than Bachelors Degree')
+    plt.title('Socioeconomic Disadvantage vs. Educational Attainment')
+    plt.savefig('socioecon_vs_education.png', bbox_inches='tight')
+
+
+def plot_problem_five(clean_data):
+    # Percent POC & ELL vs. socioeconomic index
+    fig, [ax1, ax2] = plt.subplots(2, figsize=(10, 10), ncols=1)
+    sns.barplot(x='SOCIOECONOMIC_QUINTILE',
+                y='PCT_PEOPLE_OF_COLOR',
+                data=clean_data,
+                order=['Lowest', 'Second lowest', 'Middle',
+                       'Second highest', 'Highest'],
+                ax=ax1)
+    ax1.set_xlabel('Socioeconomic Disadvantage Quintile')
+    ax1.set_ylabel('Percent of People of Color')
+    ax1.set_title('Percent of POC by Socioeconomic Disadvantage Quintile')
+    sns.barplot(x='SOCIOECONOMIC_QUINTILE',
+                y='PCT_ENGLISH_LESSTHAN_VERY_WELL',
+                data=clean_data,
+                order=['Lowest', 'Second lowest', 'Middle',
+                       'Second highest', 'Highest'],
+                ax=ax2)
+    ax2.set_xlabel('Socioeconomic Disadvantage Quintile')
+    ax2.set_ylabel('Percent of English Language Learners')
+    ax2.set_title('Percent of ELL by Socioeconomic Disadvantage Quintile')
+    fig.savefig('poc&ell_vs_socioecon.png', bbox_inches='tight')
 
 
 def main():
     clean_data = filter_data()
     plot_problem_one(clean_data)
     plot_problem_two(clean_data)
-    plot_question_three(clean_data)
+    plot_problem_three(clean_data)
+    plot_problem_four(clean_data)
+    plot_problem_five(clean_data)
 
 
 if __name__ == '__main__':
