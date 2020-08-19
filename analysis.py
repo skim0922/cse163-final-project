@@ -9,26 +9,36 @@ import matplotlib.pyplot as plt
 
 def plot_problem_one(clean_data):
     # race vs.poor mental health
-    sns.relplot(x='RACE_ELL_ORIGINS_PERCENTILE',
-                y='PCT_ADULTMENTALHEALTHNOTGOOD',
-                kind='scatter', data=clean_data)
+    sns.lmplot(x='RACE_ELL_ORIGINS_PERCENTILE',
+               y='PCT_ADULTMENTALHEALTHNOTGOOD',
+               scatter=True, data=clean_data, fit_reg=True)
     plt.xlabel('Race, ELL, and Origins Index Percentile')
     plt.ylabel('Percentage of Adults Without Good Mental Health')
     plt.title('Race, English Language Learners(ELL), and Origins Index'
               'Percentile vs Percentage of Adults Without Good Mental Health')
     plt.savefig('race_vs_mentalhealth.png', bbox_inches='tight')
-
-
-def plot_problem_two(clean_data):
     # socioeconomic vs poor mental health
-    sns.relplot(x='SOCIOECONOMIC_PERCENTILE',
-                y='PCT_ADULTMENTALHEALTHNOTGOOD',
-                kind='scatter', data=clean_data)
+    sns.lmplot(x='SOCIOECONOMIC_PERCENTILE',
+               y='PCT_ADULTMENTALHEALTHNOTGOOD',
+               scatter=True, data=clean_data, fit_reg=True)
     plt.xlabel('Socioeconomic Disadvantage Index Percentile')
     plt.ylabel('Percentage of Adults Without Good Mental Health')
     plt.title('Socioeconomic Disadvantage Index'
               'Percentile vs Percentage of Adults Without Good Mental Health')
     plt.savefig('socioecon_vs_mentalhealth.png', bbox_inches='tight')
+
+
+def plot_problem_two(clean_data):
+    # ELL vs educ attainment less than a bachelors
+    sns.lmplot(x='PCT_ENGLISH_LESSTHAN_VERY_WELL',
+               y='PCT_LESS_BACHELOR_DEGREE',
+               scatter=True, data=clean_data, fit_reg=True)
+    plt.xlabel('Percentage of English Language Learners')
+    plt.ylabel('Percentage of People with an Educational Attainment Less Than'
+               'a Bachelors Degree')
+    plt.title('Percentage of English Language Learners vs Percentage of People'
+              'with an Educational Attainment Less Than a Bachelors Degree')
+    plt.savefig('ell_vs_educ.png')
 
 
 def plot_problem_three(clean_data):
