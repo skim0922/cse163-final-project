@@ -7,6 +7,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
+<<<<<<< Updated upstream
 def plot_problem_1(clean_data):
     # race vs.poor mental health
     sns.relplot(x='RACE_ELL_ORIGINS_PERCENTILE',
@@ -20,6 +21,31 @@ def plot_problem_1(clean_data):
                 kind='scatter', data=clean_data)
     plt.savefig('socioecon_vs_mentalhealth.png')
 
+=======
+def plot_problem_one(data):
+    # race vs.poor mental health
+    sns.relplot(x = 'RACE_ELL_ORIGINS_PERCENTILE',
+                y = 'PCT_ADULTMENTALHEALTHNOTGOOD',
+                kind = 'scatter', data=data) 
+    plt.xlabel('Race, ELL, and Origins Index Percentile')
+    plt.ylabel('Percentage of Adults Without Good Mental Health') 
+    plt.tile('Race, English Language Learners(ELL), and Origins Index'
+             'Percentile vs Percentage of Adults Without Good Mental Health')
+    plt.savefig('race_vs_mentalhealth.png', bbox_inches='tight')
+
+
+def plot_problem_two(data): 
+    # socioeconomic vs poor mental health
+    sns.relplot(x = 'SOCIOECONOMIC_PERCENTILE',
+                y = 'PCT_ADULTMENTALHEALTHNOTGOOD',
+                kind = 'scatter', data = data) 
+    plt.xlabel('Socioeconomic Disadvantage Index Percentile')
+    plt.ylabel('Percentage of Adults Without Good Mental Health') 
+    plt.tile('Socioeconomic Disadvantage Index'
+             'Percentile vs Percentage of Adults Without Good Mental Health')
+    plt.savefig('socioecon_vs_mentalhealth.png', bbox_inches='tight') 
+    
+>>>>>>> Stashed changes
 
 def plot_question_three(clean_data):
     # total acres vs. index quintile
@@ -35,9 +61,27 @@ def plot_question_three(clean_data):
 
 
 def main():
+<<<<<<< Updated upstream
     clean_data = filter_data()
     plot_problem_1(clean_data)
     plot_question_three(clean_data)
+=======
+    # Sahana's path:
+     df = pd.read_csv('/Users/sahana/Desktop/github/cse163-final-project/'
+                   'data/Racial_and_Social_Equity_Composite_Index.csv') 
+    # Stella's path:
+    # df = pd.read_csv('/Users/stella/Desktop/cse163-final-project/data/
+    # Racial_and_Social_Equity_Composite_Index.csv')
+
+    df = df.dropna()
+    data = df[['PCT_ADULTMENTALHEALTHNOTGOOD', 'RACE_ELL_ORIGINS_PERCENTILE',
+               'SOCIOECONOMIC_PERCENTILE', 'PCT_ENGLISH_LESSTHAN_VERY_WELL',
+               'PCT_LESS_BACHELOR_DEGREE', 'ACRES_TOTAL', 'COMPOSITE_QUINTILE',
+               'NAME10']]   
+    plot_problem_one(data)
+    plot_problem_two(data)
+    plot_question_three(data)
+>>>>>>> Stashed changes
 
 
 if __name__ == '__main__':
