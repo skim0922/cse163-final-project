@@ -5,10 +5,11 @@ File to perform data analysis
 from clean_data import filter_data
 import seaborn as sns
 import matplotlib.pyplot as plt
+import statsmodels.api as sm
 
 
 def plot_problem_one(clean_data):
-    # race vs.poor mental health
+    # race vs.poor mental health plot
     sns.lmplot(x='RACE_ELL_ORIGINS_PERCENTILE',
                y='PCT_ADULTMENTALHEALTHNOTGOOD',
                scatter=True, data=clean_data, fit_reg=True)
@@ -17,7 +18,12 @@ def plot_problem_one(clean_data):
     plt.title('Race, English Language Learners(ELL), and Origins Index'
               'Percentile vs Percentage of Adults Without Good Mental Health')
     plt.savefig('race_vs_mentalhealth.png', bbox_inches='tight')
-    # socioeconomic vs poor mental health
+    # regression and r-squared
+    x = sm.add_constant(clean_data['RACE_ELL_ORIGINS_PERCENTILE'])
+    race_model = sm.OLS(clean_data['PCT_ADULTMENTALHEALTHNOTGOOD'], x).fit()
+    race_rsquared = race_model.rsquared
+
+    # socioeconomic vs poor mental health plot
     sns.lmplot(x='SOCIOECONOMIC_PERCENTILE',
                y='PCT_ADULTMENTALHEALTHNOTGOOD',
                scatter=True, data=clean_data, fit_reg=True)
@@ -26,6 +32,22 @@ def plot_problem_one(clean_data):
     plt.title('Socioeconomic Disadvantage Index'
               'Percentile vs Percentage of Adults Without Good Mental Health')
     plt.savefig('socioecon_vs_mentalhealth.png', bbox_inches='tight')
+    # regression and r-squared
+    x = sm.add_constant(clean_data['SOCIOECONOMIC_PERCENTILE'])
+    socioecon_model = sm.OLS(clean_data['PCT_ADULTMENTALHEALTHNOTGOOD'],
+                             x).fit()
+    socioecon_rsquared = socioecon_model.rsquared
+    print(socioecon_rsquared)
+    # comparison
+    if race_rsquared > socioecon_rsquared:
+        print('The Race, English Language Learners(ELL), and Origins Index'
+              'has a stronger correlation with having poor mental health')
+    elif race_rsquared < socioecon_rsquared:
+        print('The Socioeconomic Disadvantage Index Percentile has a '
+              'stronger correlation with having poor mental health')
+    else:
+        print('Both race and socioeconomic status have the same'
+              'correlation with having poor mental health')
 
 
 def plot_problem_two(clean_data):
@@ -39,7 +61,7 @@ def plot_problem_two(clean_data):
     plt.title('Percentage of English Language Learners vs Percentage of People'
               'with an Educational Attainment Less Than a Bachelors Degree')
     plt.savefig('/Users/sahana/Desktop/github/cse163-final-project/'
-                'ell_vs_educ.png') 
+                'ell_vs_educ.png')
 
 
 def plot_problem_three(clean_data):
@@ -54,7 +76,7 @@ def plot_problem_three(clean_data):
     plt.ylabel('Total Acres')
     plt.xticks(rotation=-45)
     plt.title('Total Neighborhood Acres by Composite Index Quintile')
-    plt.savefig('size_vs_quintile.png', bbox_inches='tight') 
+    plt.savefig('size_vs_quintile.png', bbox_inches='tight')
 
 
 def plot_problem_four(clean_data):
