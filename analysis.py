@@ -38,7 +38,8 @@ def plot_problem_two(clean_data):
                'a Bachelors Degree')
     plt.title('Percentage of English Language Learners vs Percentage of People'
               'with an Educational Attainment Less Than a Bachelors Degree')
-    plt.savefig('ell_vs_educ.png')
+    plt.savefig('/Users/sahana/Desktop/github/cse163-final-project/'
+                'ell_vs_educ.png') 
 
 
 def plot_problem_three(clean_data):
@@ -53,7 +54,7 @@ def plot_problem_three(clean_data):
     plt.ylabel('Total Acres')
     plt.xticks(rotation=-45)
     plt.title('Total Neighborhood Acres by Composite Index Quintile')
-    plt.savefig('size_vs_quintile.png', bbox_inches='tight')
+    plt.savefig('size_vs_quintile.png', bbox_inches='tight') 
 
 
 def plot_problem_four(clean_data):
