@@ -9,6 +9,7 @@ import statsmodels.api as sm
 
 
 def plot_problem_one(clean_data):
+    # filtered data
     # race vs.poor mental health plot
     sns.lmplot(x='RACE_ELL_ORIGINS_PERCENTILE',
                y='PCT_ADULTMENTALHEALTHNOTGOOD',
@@ -19,9 +20,11 @@ def plot_problem_one(clean_data):
               'Percentile vs Percentage of Adults Without Good Mental Health')
     plt.savefig('race_vs_mentalhealth.png', bbox_inches='tight')
     # regression and r-squared
-    x = sm.add_constant(clean_data['RACE_ELL_ORIGINS_PERCENTILE'])
-    race_model = sm.OLS(clean_data['PCT_ADULTMENTALHEALTHNOTGOOD'], x).fit()
-    race_rsquared = race_model.rsquared
+    race_model = make_regression_model(data=clean_data,
+                                       x_col='RACE_ELL_ORIGINS_PERCENTILE',
+                                       y_col='PCT_ADULTMENTALHEALTHNOTGOOD')
+    # print(str(race_model.summary()))
+    regression_significance(race_model.pvalues)
 
     # socioeconomic vs poor mental health plot
     sns.lmplot(x='SOCIOECONOMIC_PERCENTILE',
@@ -33,16 +36,18 @@ def plot_problem_one(clean_data):
               'Percentile vs Percentage of Adults Without Good Mental Health')
     plt.savefig('socioecon_vs_mentalhealth.png', bbox_inches='tight')
     # regression and r-squared
-    x = sm.add_constant(clean_data['SOCIOECONOMIC_PERCENTILE'])
-    socioecon_model = sm.OLS(clean_data['PCT_ADULTMENTALHEALTHNOTGOOD'],
-                             x).fit()
-    socioecon_rsquared = socioecon_model.rsquared
-    print(socioecon_rsquared)
+    socioecon_model = make_regression_model(data=clean_data,
+                                            x_col='SOCIOECONOMIC_PERCENTILE',
+                                            y_col='PCT_ADULT'
+                                            'MENTALHEALTHNOTGOOD')
+    # print(str(socioecon_model.summary()))
+    regression_significance(socioecon_model.pvalues)
+
     # comparison
-    if race_rsquared > socioecon_rsquared:
+    if race_model.rsquared > socioecon_model.rsquared:
         print('The Race, English Language Learners(ELL), and Origins Index'
               'has a stronger correlation with having poor mental health')
-    elif race_rsquared < socioecon_rsquared:
+    elif race_model.rsquared < socioecon_model.rsquared:
         print('The Socioeconomic Disadvantage Index Percentile has a '
               'stronger correlation with having poor mental health')
     else:
@@ -62,6 +67,11 @@ def plot_problem_two(clean_data):
               'with an Educational Attainment Less Than a Bachelors Degree')
     plt.savefig('/Users/sahana/Desktop/github/cse163-final-project/'
                 'ell_vs_educ.png')
+    ell_vs_educ_model = make_regression_model(data=clean_data,
+                                              x_col='PCT_ENGLISH_LESS'
+                                              'THAN_VERY_WELL',
+                                              y_col='PCT_LESS_BACHELOR_DEGREE')
+    regression_significance(ell_vs_educ_model)
 
 
 def plot_problem_three(clean_data):
@@ -90,6 +100,13 @@ def plot_problem_four(clean_data):
     plt.ylabel('Percent of People with Less than Bachelors Degree')
     plt.title('Socioeconomic Disadvantage vs. Educational Attainment')
     plt.savefig('socioecon_vs_education.png', bbox_inches='tight')
+    # regression analysis
+    socioecon_vs_educ_model = make_regression_model(data=clean_data,
+                                                    x_col='SOCIOECONOMIC_'
+                                                          'PERCENTILE',
+                                                    y_col='PCT_LESS_'
+                                                          'BACHELOR_DEGREE')
+    regression_significance(socioecon_vs_educ_model.pvalues)
 
 
 def plot_problem_five(clean_data):
@@ -114,6 +131,23 @@ def plot_problem_five(clean_data):
     ax2.set_ylabel('Percent of English Language Learners')
     ax2.set_title('Percent of ELL by Socioeconomic Disadvantage Quintile')
     fig.savefig('poc&ell_vs_socioecon.png', bbox_inches='tight')
+
+
+def make_regression_model(data, x_col, y_col):
+    x = sm.add_constant(data[x_col])
+    model = sm.OLS(data[y_col], x).fit()
+    return model
+
+
+def regression_significance(abs_p_values):
+    abs_x, abs_y = abs_p_values
+    p_value = abs_y/2
+    alpha = 0.05
+    if p_value < alpha:
+        print('reject null hypothesis and '
+              'accept alternative hypothesis')
+    else:
+        print('accept null hypothesis')
 
 
 def main():
