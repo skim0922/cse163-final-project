@@ -4,7 +4,8 @@ File for testing data and result validity
 
 from clean_data import filter_data
 from clean_data import test_dataset
-import statsmodels.api as sm
+from analysis import regression_significance
+from analysis import make_regression_model
 
 
 def test_problem_one(clean_data, test_data):
@@ -118,19 +119,6 @@ def test_problem_five(clean_data):
     print('Middle quintile difference: ', middle_diff)
     print('Second highest quintile difference: ', second_high_diff)
     print('Highest quintile difference: ', highest_diff)
-
-
-def make_regression_model(data, x_col, y_col):
-    x = sm.add_constant(data[x_col])
-    model = sm.OLS(data[y_col], x).fit()
-    return model
-
-
-def regression_significance(p_values):
-    x, y = p_values
-    p_value = y/2
-    alpha = 0.05
-    return p_value < alpha
 
 
 def check_significance(full_model_name, test_model_name, problem_num):

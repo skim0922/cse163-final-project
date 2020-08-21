@@ -1,7 +1,6 @@
 '''
 File to clean and filter data
 '''
-
 import pandas as pd
 
 
@@ -10,10 +9,6 @@ def filter_data():
     Creates a master dataframe with only necessary columns,
     drops na values.
     '''
-    # Sahana's path:
-    # df = pd.read_csv('/Users/sahana/Desktop/github/'
-    #                 'cse163-final-project/data/Racial_and_'
-    #                 'Social_Equity_Composite_Index.csv')
     df = pd.read_csv('data/Racial_and_Social_Equity_Composite_Index.csv')
     df = df.dropna()
     data = df[['PCT_ADULTMENTALHEALTHNOTGOOD', 'RACE_ELL_ORIGINS_PERCENTILE',

@@ -29,7 +29,8 @@ def plot_problem_one(clean_data):
                                        x_col='RACE_ELL_ORIGINS_PERCENTILE',
                                        y_col='PCT_ADULTMENTALHEALTHNOTGOOD')
     # print(str(race_model.summary()))
-    # regression_significance(race_model.pvalues)
+    significance_1_1 = regression_significance(race_model.pvalues)
+    stats_summary('one part 1', race_model.rsquared, significance_1_1)
 
     # socioeconomic vs poor mental health plot
     sns.lmplot(x='SOCIOECONOMIC_PERCENTILE',
@@ -47,7 +48,8 @@ def plot_problem_one(clean_data):
                                             y_col='PCT_ADULT'
                                             'MENTALHEALTHNOTGOOD')
     # print(str(socioecon_model.summary()))
-    # regression_significance(socioecon_model.pvalues)
+    significance_1_2 = regression_significance(socioecon_model.pvalues)
+    stats_summary('one part 2', socioecon_model.rsquared, significance_1_2)
 
     # comparison
     if race_model.rsquared > socioecon_model.rsquared:
@@ -76,12 +78,13 @@ def plot_problem_two(clean_data):
     plt.title('Percentage of English Language Learners vs Percentage of People'
               ' with Less Than a Bachelors Degree')
     plt.savefig('results/ell_vs_educ.png', bbox_inches='tight')
-    #ell_vs_educ_model = make_regression_model(data=clean_data,
-    #                                          x_col='PCT_ENGLISH_LESS'
-    #                                                'THAN_VERY_WELL',
-    #                                          y_col='PCT_LESS_BACHELOR_'
-    #                                                'DEGREE')
-    # regression_significance(ell_vs_educ_model)
+    ell_vs_educ_model = make_regression_model(data=clean_data,
+                                              x_col='PCT_ENGLISH_LESS'
+                                                    'THAN_VERY_WELL',
+                                              y_col='PCT_LESS_BACHELOR_'
+                                                    'DEGREE')
+    significance_2 = regression_significance(ell_vs_educ_model.pvalues)
+    stats_summary('two', ell_vs_educ_model.rsquared, significance_2)
 
 
 def plot_problem_three(clean_data):
@@ -102,6 +105,12 @@ def plot_problem_three(clean_data):
     plt.xticks(rotation=-45)
     plt.title('Total Neighborhood Acres by Composite Index Quintile')
     plt.savefig('results/size_vs_quintile.png', bbox_inches='tight')
+    size_vs_quintile_model = make_regression_model(data=clean_data,
+                                                   x_col='COMPOSITE_'
+                                                         'PERCENTILE',
+                                                   y_col='ACRES_TOTAL')
+    significance_3 = regression_significance(size_vs_quintile_model.pvalues)
+    stats_summary('three', size_vs_quintile_model.rsquared, significance_3)
 
 
 def plot_problem_four(clean_data):
@@ -120,12 +129,13 @@ def plot_problem_four(clean_data):
     plt.title('Socioeconomic Disadvantage vs. Educational Attainment')
     plt.savefig('results/socioecon_vs_education.png',
                 bbox_inches='tight')
-    #socioecon_vs_educ_model = make_regression_model(data=clean_data,
-    #                                                x_col='SOCIOECONOMIC_'
-    #                                                      'PERCENTILE',
-    #                                                y_col='PCT_LESS_'
-    #                                                      'BACHELOR_DEGREE')
-    # regression_significance(socioecon_vs_educ_model.pvalues)
+    socioecon_vs_educ_model = make_regression_model(data=clean_data,
+                                                    x_col='SOCIOECONOMIC_'
+                                                          'PERCENTILE',
+                                                    y_col='PCT_LESS_'
+                                                          'BACHELOR_DEGREE')
+    significance_4 = regression_significance(socioecon_vs_educ_model.pvalues)
+    stats_summary('four', socioecon_vs_educ_model.rsquared, significance_4)
 
 
 def plot_problem_five(clean_data):
@@ -175,6 +185,15 @@ def regression_significance(p_values):
     p_value = y/2
     alpha = 0.05
     return p_value < alpha
+
+
+def stats_summary(problem_num, value, significance, stat='r-squared'):
+    print('problem: ' + problem_num)
+    print(stat + ': ' + str(value))
+    if significance:
+        print('Regression is statistically significant')
+    else:
+        print('Regression is not statistically significant')
 
 
 def main():
