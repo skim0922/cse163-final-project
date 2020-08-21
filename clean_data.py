@@ -24,6 +24,14 @@ def filter_data():
     return data
 
 
+def test_dataset():
+    # creating a smallet test dataset
+    data = filter_data()
+    test_data = data.loc[1:20, :]
+    # print(test_data)
+    return test_data
+
+
 def main():
     filter_data()
 

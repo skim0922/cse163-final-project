@@ -1,7 +1,3 @@
-'''
-File to perform data analysis
-'''
-
 from clean_data import filter_data
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -24,7 +20,7 @@ def plot_problem_one(clean_data):
                                        x_col='RACE_ELL_ORIGINS_PERCENTILE',
                                        y_col='PCT_ADULTMENTALHEALTHNOTGOOD')
     # print(str(race_model.summary()))
-    regression_significance(race_model.pvalues)
+    # regression_significance(race_model.pvalues)
 
     # socioeconomic vs poor mental health plot
     sns.lmplot(x='SOCIOECONOMIC_PERCENTILE',
@@ -41,7 +37,7 @@ def plot_problem_one(clean_data):
                                             y_col='PCT_ADULT'
                                             'MENTALHEALTHNOTGOOD')
     # print(str(socioecon_model.summary()))
-    regression_significance(socioecon_model.pvalues)
+    # regression_significance(socioecon_model.pvalues)
 
     # comparison
     if race_model.rsquared > socioecon_model.rsquared:
@@ -60,18 +56,18 @@ def plot_problem_two(clean_data):
     sns.lmplot(x='PCT_ENGLISH_LESSTHAN_VERY_WELL',
                y='PCT_LESS_BACHELOR_DEGREE',
                scatter=True, data=clean_data, fit_reg=True)
-    plt.xlabel('Percentage of English Language Learners')
+    plt.xlabel('Percent of English Language Learners')
     plt.ylabel('Percentage of People with an Educational Attainment Less Than'
                'a Bachelors Degree')
     plt.title('Percentage of English Language Learners vs Percentage of People'
               'with an Educational Attainment Less Than a Bachelors Degree')
     plt.savefig('/Users/sahana/Desktop/github/cse163-final-project/'
                 'ell_vs_educ.png')
-    ell_vs_educ_model = make_regression_model(data=clean_data,
+    # ell_vs_educ_model = make_regression_model(data=clean_data,
                                               x_col='PCT_ENGLISH_LESS'
                                               'THAN_VERY_WELL',
                                               y_col='PCT_LESS_BACHELOR_DEGREE')
-    regression_significance(ell_vs_educ_model)
+    # regression_significance(ell_vs_educ_model)
 
 
 def plot_problem_three(clean_data):
@@ -106,7 +102,7 @@ def plot_problem_four(clean_data):
                                                           'PERCENTILE',
                                                     y_col='PCT_LESS_'
                                                           'BACHELOR_DEGREE')
-    regression_significance(socioecon_vs_educ_model.pvalues)
+    # regression_significance(socioecon_vs_educ_model.pvalues)
 
 
 def plot_problem_five(clean_data):
@@ -139,15 +135,11 @@ def make_regression_model(data, x_col, y_col):
     return model
 
 
-def regression_significance(abs_p_values):
-    abs_x, abs_y = abs_p_values
-    p_value = abs_y/2
+def regression_significance(p_values):
+    x, y = p_values
+    p_value = y/2
     alpha = 0.05
-    if p_value < alpha:
-        print('reject null hypothesis and '
-              'accept alternative hypothesis')
-    else:
-        print('accept null hypothesis')
+    return p_value < alpha
 
 
 def main():
