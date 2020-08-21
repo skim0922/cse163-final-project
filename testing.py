@@ -21,6 +21,7 @@ def test_problem_one(clean_data, test_data):
                                             y_col='PCT_ADULTMENTAL'
                                                   'HEALTHNOTGOOD')
     check_significance(race_model_full, race_model_test, 'one part 1')
+    print('Race correlation coefficient: ', race_model_full.rsquared)
 
     # socioeconomic vs poor mental health plot
     # regression and r-squared
@@ -38,6 +39,8 @@ def test_problem_one(clean_data, test_data):
     # regression_significance(socioecon_model.pvalues)
     check_significance(socioecon_model_full, socioecon_model_test,
                        'one part 2')
+    print('Socioeconomic correlation coefficient: ',
+          socioecon_model_full.rsquared)
 
 
 def test_problem_two(clean_data, test_data):
