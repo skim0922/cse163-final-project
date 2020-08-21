@@ -1,31 +1,35 @@
 '''
-File to clean and sort data
+File to clean and filter data
 '''
 
 import pandas as pd
 
 
 def filter_data():
-    # creating master dataframe with everything in it
+    '''
+    Creates a master dataframe with only necessary columns,
+    drops na values.
+    '''
     # Sahana's path:
-    df = pd.read_csv('/Users/sahana/Desktop/github/'
-                     'cse163-final-project/data/Racial_and_'
-                     'Social_Equity_Composite_Index.csv')
-    # Stella's path:
-    # df = pd.read_csv('/Users/stella/Desktop/cse163-final-project/'
-    #                  'data/Racial_and_Social_Equity_Composite_Index.csv')
+    # df = pd.read_csv('/Users/sahana/Desktop/github/'
+    #                 'cse163-final-project/data/Racial_and_'
+    #                 'Social_Equity_Composite_Index.csv')
+    df = pd.read_csv('data/Racial_and_Social_Equity_Composite_Index.csv')
     df = df.dropna()
     data = df[['PCT_ADULTMENTALHEALTHNOTGOOD', 'RACE_ELL_ORIGINS_PERCENTILE',
                'SOCIOECONOMIC_PERCENTILE', 'PCT_ENGLISH_LESSTHAN_VERY_WELL',
                'PCT_PEOPLE_OF_COLOR', 'SOCIOECONOMIC_QUINTILE',
                'PCT_LESS_BACHELOR_DEGREE', 'ACRES_TOTAL', 'COMPOSITE_QUINTILE',
-              'NAME10']]
+              'NAME10', 'COMPOSITE_PERCENTILE']]
+    # rename column to shorten it
     data = data.replace({'Highest priority/Most disadvantaged': 'Highest'})
     return data
 
 
 def test_dataset():
-    # creating a smallet test dataset
+    '''
+    Creates a smaller dataset to use for testing
+    '''
     data = filter_data()
     test_data = data.loc[1:20, :]
     # print(test_data)
