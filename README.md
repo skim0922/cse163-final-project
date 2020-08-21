@@ -3,7 +3,7 @@
 
 _By: Stella Kim and Sahana Sundar_
 
-### Necessary libraries
+### Necessary Libraries
 Pandas, Seaborn, Matplotlib.pyplot, and Statsmodels.api
 
 ### Reproducing Results
