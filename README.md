@@ -22,3 +22,4 @@ Pandas, Seaborn, Matplotlib.pyplot, and Statsmodels.api
     - results/socioecon_vs_education.png
   - Question 5:
     - results/poc&ell_vs_socioecon.png
+5. Run testing.py to confirm result validity
