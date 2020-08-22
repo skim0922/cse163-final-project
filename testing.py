@@ -9,6 +9,11 @@ from analysis import make_regression_model
 
 
 def test_problem_one(clean_data, test_data):
+    '''
+    Tests problem one by comparing the p-values of both the
+    test dataset and full dataset. Also prints out the
+    r-squared values of the regressions with the full dataset.
+    '''
     # race vs.poor mental health plot
     # regression and r-squared
     race_model_full = make_regression_model(data=clean_data,
@@ -45,6 +50,12 @@ def test_problem_one(clean_data, test_data):
 
 
 def test_problem_two(clean_data, test_data):
+    '''
+    Tests problem two by comparing the p-values of both the
+    test dataset and full dataset. Also prints out the
+    r-squared value of the regression with the full dataset.
+    '''
+
     # ELL vs educ attainment less than a bachelors
     ell_vs_educ_model_full = make_regression_model(data=clean_data,
                                                    x_col='PCT_ENGLISH_LESS'
@@ -75,6 +86,11 @@ def test_problem_three(clean_data):
 
 
 def test_problem_four(clean_data, test_data):
+    '''
+    Tests problem one by comparing the p-values of both the
+    test dataset and full dataset. Also prints out the
+    r-squared value of the regression with the full dataset.
+    '''
     # socioeconomic percentile vs. educational attainment
     socioecon_vs_educ_model_full = make_regression_model(data=clean_data,
                                                          x_col='SOCIOECONOMIC_'
@@ -122,6 +138,11 @@ def test_problem_five(clean_data):
 
 
 def check_significance(full_model_name, test_model_name, problem_num):
+    '''
+    Takes in the name for the models containing both the full set of data
+    and the test data and checks to ensure that they are both indicating the
+    same significance level
+    '''
     full_significance = regression_significance(full_model_name.pvalues)
     test_significance = regression_significance(test_model_name.pvalues)
     print('Problem: ' + problem_num)

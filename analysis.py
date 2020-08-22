@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 import statsmodels.api as sm
 
 
-def plot_problem_one(clean_data):
+def problem_one(clean_data):
     '''
     Takes in cleaned data, produces two regression plots
     and saves to the results directory.
-    Creates a regression model and compares significance of
+    Creates a regression models, calculates p-values and r-squared
+    and compares significance of
     race and socioeconomic disadvantage on mental health.
     '''
     # race vs.poor mental health plot
@@ -63,10 +64,11 @@ def plot_problem_one(clean_data):
               'correlation with having poor mental health')
 
 
-def plot_problem_two(clean_data):
+def problem_two(clean_data):
     '''
     Takes in cleaned data, produces a regression plot,
-    and saves to results directory.
+    and saves to results directory. Creates a regression model,
+    calculates p-values and r-squared
     '''
     # ELL vs educ attainment less than a bachelors
     sns.lmplot(x='PCT_ENGLISH_LESSTHAN_VERY_WELL',
@@ -87,11 +89,12 @@ def plot_problem_two(clean_data):
     stats_summary('two', ell_vs_educ_model.rsquared, significance_2)
 
 
-def plot_problem_three(clean_data):
+def problem_three(clean_data):
     '''
     Takes in clean data, produces bar plot comparing
     neighborhood size to composite quintile, and
-    saves to results directory.
+    saves to results directory. Creates a regression model,
+    calculates p-values and r-squared
     '''
     # total acres vs. index quintile
     sns.catplot(x='COMPOSITE_QUINTILE',
@@ -113,10 +116,11 @@ def plot_problem_three(clean_data):
     stats_summary('three', size_vs_quintile_model.rsquared, significance_3)
 
 
-def plot_problem_four(clean_data):
+def problem_four(clean_data):
     '''
     Takes in clean data, produces regression plot, and
-    saves to results directory.
+    saves to results directory. Creates a regression model,
+    calculates p-values and r-squared
     '''
     # socioeconomic percentile vs. educational attainment
     sns.lmplot(x='SOCIOECONOMIC_PERCENTILE',
@@ -138,10 +142,11 @@ def plot_problem_four(clean_data):
     stats_summary('four', socioecon_vs_educ_model.rsquared, significance_4)
 
 
-def plot_problem_five(clean_data):
+def problem_five(clean_data):
     '''
     Takes in clean data, produces two bar charts on
-    same axis, and saves to results directory.
+    same axis, and saves to results directory. Creates a regression model,
+    calculates p-values and r-squared
     '''
     # Percent POC & ELL vs. socioeconomic index
     fig, [ax1, ax2] = plt.subplots(2, figsize=(10, 10), ncols=1)
@@ -179,7 +184,8 @@ def make_regression_model(data, x_col, y_col):
 def regression_significance(p_values):
     '''
     Takes in a p_value and returns whether it's
-    less than alpha of 0.05.
+    less than alpha of 0.05, indicating its
+    significance
     '''
     x, y = p_values
     p_value = y/2
@@ -188,6 +194,16 @@ def regression_significance(p_values):
 
 
 def stats_summary(problem_num, value, significance, stat='r-squared'):
+    '''
+    Prints out the values found through statistical analysis for
+    problems 1 - 4
+    Parameters:
+    problem_num(str): indicating the problem number
+    stat(str): name of the statisitc value, default is r-squared
+    value(float): value of specified statistic
+    significance(bool): indicates the significance of the statisitic
+    being evaluated
+    '''
     print('problem: ' + problem_num)
     print(stat + ': ' + str(value))
     if significance:
@@ -198,11 +214,11 @@ def stats_summary(problem_num, value, significance, stat='r-squared'):
 
 def main():
     clean_data = filter_data()
-    plot_problem_one(clean_data)
-    plot_problem_two(clean_data)
-    plot_problem_three(clean_data)
-    plot_problem_four(clean_data)
-    plot_problem_five(clean_data)
+    problem_one(clean_data)
+    problem_two(clean_data)
+    problem_three(clean_data)
+    problem_four(clean_data)
+    problem_five(clean_data)
 
 
 if __name__ == '__main__':
